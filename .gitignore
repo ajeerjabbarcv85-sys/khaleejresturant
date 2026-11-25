@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env*.local
+*.tsbuildinfo
+.DS_Store
+npm-debug.log*
+data/*.db
+data/*.db-*
+public/images/uploads/*

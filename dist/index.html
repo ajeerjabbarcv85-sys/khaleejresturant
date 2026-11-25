@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6b7f32">
+  <meta name="description" content="Explore the menu at Khaleej Restaurant, Opp Ambulance Stand near Kozhikode Medical College, Velliparamba, Kozhikode.">
+  <title>Khaleej Restaurant | Velliparamba, Kozhikode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <!-- Sticky navigation and mobile menu -->
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Khaleej Restaurant home">
+      <img src="/images/logo.png" alt="Khaleej Restaurant logo" onerror="this.hidden=true">
+      <span><b>KHALEEJ</b><small>RESTAURANT</small></span>
+    </a>
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#about">Visit us</a>
+      <a class="nav-call" href="tel:+919048700557">Call to order</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-button" id="cart-button" aria-label="Open your order" aria-controls="cart-drawer" aria-expanded="false"><span class="cart-label">Order</span> <span class="cart-badge" id="cart-count">0</span></button>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <main>
+      <!-- Hero: restaurant identity and primary actions -->
+    <section id="home" class="hero">
+      <div class="hero-photo" role="img" aria-label="Freshly prepared food served at Khaleej"></div>
+      <div class="hero-content">
+        <img class="hero-logo" src="/images/logo.png" alt="Khaleej Restaurant logo" onerror="this.hidden=true">
+        <p class="eyebrow">A taste of the coast, close to home</p>
+        <h1>Khaleej<br><em>Restaurant</em></h1>
+        <p class="hero-address">Opp Ambulance Stand, near Kozhikode Medical College<br>Velliparamba, Kozhikode, Kerala</p>
+        <div class="hero-actions"><a class="button button-gold" href="#menu">Explore the menu <span aria-hidden="true">↓</span></a><a class="button button-outline" href="tel:+919048700557">Call 9048 700 557</a></div>
+        <div class="hero-secondary"><a href="tel:+919048700558">Or call 9048 700 558</a><span>Open for good food & good company</span></div>
+      </div>
+      <a href="#menu" class="scroll-cue" aria-label="Scroll to menu">SCROLL TO EXPLORE <span>↓</span></a>
+    </section>
+
+    <!-- Menu cards are generated from the menu data in script.js -->
+    <section id="menu" class="section menu-section">
+      <div class="section-heading"><p class="eyebrow">Made fresh, served with care</p><h2>Our <em>Menu</em></h2><p>Browse food and drinks separately, from a quick cup of tea to a table full of Mandhi.</p></div>
+      <div id="menu-groups" class="menu-groups" role="group" aria-label="Menu type"></div>
+      <div id="category-tabs" class="category-tabs" role="tablist" aria-label="Menu categories"></div>
+      <div id="menu-grid" class="menu-grid" aria-live="polite"></div>
+      <p class="menu-note">Prices are in Indian Rupees (₹). Q = Quarter · H = Half · TQ = Three Quarter · F = Full. Fish prices are as per size.</p>
+    </section>
+
+    <!-- Photo gallery with an accessible lightbox -->
+    <section id="gallery" class="section gallery-section">
+      <div class="section-heading"><p class="eyebrow">From our kitchen</p><h2>Good food. <em>Good moments.</em></h2><p>Come in hungry. Leave with a reason to come back.</p></div>
+      <div class="gallery-grid">
+        <button class="gallery-item gallery-tall" data-full="/images/gallery/gallery-1.jpg" aria-label="View signature platter"><img src="/images/gallery/gallery-1.jpg" alt="Signature platter" loading="lazy"></button>
+        <button class="gallery-item" data-full="/images/gallery/gallery-2.jpg" aria-label="View tandoori dish"><img src="/images/gallery/gallery-2.jpg" alt="Tandoori dish" loading="lazy"></button>
+        <button class="gallery-item" data-full="/images/gallery/gallery-3.jpg" aria-label="View chef's special"><img src="/images/gallery/gallery-3.jpg" alt="Chef's special dish" loading="lazy"></button>
+        <button class="gallery-item" data-full="/images/gallery/gallery-4.jpg" aria-label="View biryani"><img src="/images/gallery/gallery-4.jpg" alt="Biryani plate" loading="lazy"></button>
+        <button class="gallery-item gallery-wide" data-full="/images/gallery/gallery-5.jpg" aria-label="View tandoori platter"><img src="/images/gallery/gallery-5.jpg" alt="Tandoori platter" loading="lazy"></button>
+        <button class="gallery-item" data-full="/images/gallery/gallery-6.jpg" aria-label="View fish curry"><img src="/images/gallery/gallery-6.jpg" alt="Fish curry dish" loading="lazy"></button>
+      </div>
+    </section>
+
+    <!-- About, contact details and map location -->
+    <section id="about" class="section visit-section">
+      <div class="visit-copy"><p class="eyebrow">Find your way to us</p><h2>Meet us in <em>Velliparamba.</em></h2><p>Gather your favourite people and join us for generous plates, familiar flavours and warm Kozhikode hospitality.</p>
+        <div class="visit-details"><div><span class="detail-icon" aria-hidden="true">⌖</span><p><b>Our address</b><br>Opp Ambulance Stand, near Kozhikode Medical College,<br>Velliparamba, Kozhikode, Kerala</p></div><div><span class="detail-icon" aria-hidden="true">☎</span><p><b>Call us</b><br><a href="tel:+919048700557">9048 700 557</a><br><a href="tel:+919048700558">9048 700 558</a></p></div></div>
+        <a class="button button-olive" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Khaleej+Restaurant+Velliparamba+Kozhikode">Get directions <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="map-frame"><iframe title="Map showing Khaleej Restaurant near Kozhikode Medical College" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Khaleej+Restaurant,+Velliparamba,+Kozhikode&output=embed"></iframe><a href="https://www.google.com/maps/search/?api=1&query=Khaleej+Restaurant+Velliparamba+Kozhikode" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
+    </section>
+  </main>
+  <!-- Footer with social links and contact -->
+  <footer class="site-footer"><a href="#home" class="footer-brand">KHALEEJ <span>RESTAURANT</span></a><p>Good food brings us together.</p><div class="social-links"><a href="https://www.instagram.com/khaleejrestaurent/" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a><a href="https://www.facebook.com/khaleejrestaurent" target="_blank" rel="noopener">Facebook <span aria-hidden="true">↗</span></a></div><p class="copyright">© <span id="year"></span> Khaleej Restaurant · Velliparamba, Kozhikode</p></footer>
+  <dialog id="cart-drawer" class="cart-drawer" aria-labelledby="cart-title">
+    <div class="cart-head"><div><p class="eyebrow">Made your way</p><h2 id="cart-title">Your <em>order</em></h2></div><button class="cart-close" id="cart-close" aria-label="Close order summary">×</button></div>
+    <div id="cart-items" class="cart-items" aria-live="polite"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Subtotal</span><strong id="cart-total">₹0</strong></div>
+      <p class="cart-note">Items marked “As per size” are confirmed by the restaurant. Payment is handled when your order is confirmed.</p>
+      <a id="checkout-whatsapp" class="button button-gold cart-checkout" href="https://wa.me/919048700557" target="_blank" rel="noopener">Send order on WhatsApp</a>
+      <a class="button button-outline" href="tel:+919048700557">Call 9048 700 557</a>
+      <button id="cart-clear" class="cart-clear">Clear order</button>
+    </div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="lightbox" class="lightbox" aria-label="Gallery image viewer"><button class="lightbox-close" aria-label="Close image viewer">×</button><button class="lightbox-prev" aria-label="Previous image">‹</button><img alt="Gallery image"><button class="lightbox-next" aria-label="Next image">›</button><p class="lightbox-count" aria-live="polite"></p></dialog>
+</body>
+</html>

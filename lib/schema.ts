@@ -1,0 +1,165 @@
+export const SCHEMA = `
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  passwordHash TEXT NOT NULL,
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS admin_sessions (
+  token TEXT PRIMARY KEY,
+  adminId INTEGER NOT NULL REFERENCES admins(id) ON DELETE CASCADE,
+  expiresAt TEXT NOT NULL,
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS food_categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  slug TEXT NOT NULL UNIQUE,
+  description TEXT NOT NULL DEFAULT '',
+  image TEXT NOT NULL DEFAULT '',
+  sortOrder INTEGER NOT NULL DEFAULT 0,
+  active INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS food_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  categoryId INTEGER NOT NULL REFERENCES food_categories(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  description TEXT NOT NULL DEFAULT '',
+  price REAL NOT NULL CHECK(price >= 0),
+  stock INTEGER NOT NULL DEFAULT 0 CHECK(stock >= 0),
+  imageUrl TEXT NOT NULL DEFAULT '',
+  featured INTEGER NOT NULL DEFAULT 0,
+  available INTEGER NOT NULL DEFAULT 1,
+  veg INTEGER NOT NULL DEFAULT 1,
+  createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+  updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS food_images (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  itemId INTEGER NOT NULL REFERENCES food_items(id) ON DELETE CASCADE,
+  url TEXT NOT NULL,
+  alt TEXT NOT NULL DEFAULT '',
+  sortOrder INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS customers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  customerId INTEGER REFERENCES customers(id) ON DELETE SET NULL,
+  email TEXT NOT NULL UNIQUE,
+  passwordHash TEXT NOT NULL,
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  orderCode TEXT NOT NULL UNIQUE,
+  customerId INTEGER REFERENCES customers(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL DEFAULT '',
+  address TEXT NOT NULL DEFAULT '',
+  orderType TEXT NOT NULL DEFAULT 'DELIVERY',
+  paymentMethod TEXT NOT NULL DEFAULT 'COD',
+  subtotal REAL NOT NULL DEFAULT 0,
+  tax REAL NOT NULL DEFAULT 0,
+  deliveryFee REAL NOT NULL DEFAULT 0,
+  discount REAL NOT NULL DEFAULT 0,
+  total REAL NOT NULL DEFAULT 0,
+  couponCode TEXT,
+  status TEXT NOT NULL DEFAULT 'PENDING',
+  paymentStatus TEXT NOT NULL DEFAULT 'PENDING',
+  stockRestored INTEGER NOT NULL DEFAULT 0,
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+  updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  orderId INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  itemId INTEGER NOT NULL REFERENCES food_items(id),
+  name TEXT NOT NULL,
+  price REAL NOT NULL,
+  qty INTEGER NOT NULL,
+  imageUrl TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS payments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  orderId INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  method TEXT NOT NULL,
+  amount REAL NOT NULL,
+  status TEXT NOT NULL DEFAULT 'PENDING',
+  transactionId TEXT NOT NULL DEFAULT '',
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS restaurant_tables (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  seats INTEGER NOT NULL CHECK(seats > 0),
+  active INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS reservations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  code TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL DEFAULT '',
+  date TEXT NOT NULL,
+  time TEXT NOT NULL,
+  guests INTEGER NOT NULL CHECK(guests > 0),
+  tableId INTEGER REFERENCES restaurant_tables(id) ON DELETE SET NULL,
+  notes TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'PENDING',
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS coupons (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  code TEXT NOT NULL UNIQUE,
+  type TEXT NOT NULL DEFAULT 'PERCENT',
+  value REAL NOT NULL DEFAULT 0,
+  minOrder REAL NOT NULL DEFAULT 0,
+  active INTEGER NOT NULL DEFAULT 1,
+  expiresAt TEXT,
+  usageLimit INTEGER,
+  usedCount INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS restaurant_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS feedback (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),
+  message TEXT NOT NULL,
+  approved INTEGER NOT NULL DEFAULT 0,
+  createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_items_category ON food_items(categoryId);
+CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(createdAt);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_reservations_slot ON reservations(date, time, tableId);
+CREATE INDEX IF NOT EXISTS idx_reservations_phone ON reservations(phone);
+`;
